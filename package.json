@@ -1,0 +1,19 @@
+{
+  "name": "generative-three-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:smhutch/generative-three-demo.git",
+  "author": "Scott Hutcheson <scott@smhutch.co.uk>",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "typescript": "^4.0.3"
+  },
+  "scripts": {
+    "dev": "parcel src/index.html"
+  },
+  "dependencies": {
+    "canvas-sketch-util": "^1.10.0",
+    "three": "^0.121.1"
+  }
+}
