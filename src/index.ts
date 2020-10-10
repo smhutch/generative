@@ -1,7 +1,17 @@
 import * as THREE from "three";
+import Stats from "stats.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { createRandom } from "canvas-sketch-util/random";
 import { lerp } from "canvas-sketch-util/math";
+
+function getAntialias() {
+  return window.devicePixelRatio > 1 ? false : true;
+}
+
+type Item = {
+  shape: THREE.Mesh;
+  noise: number;
+};
 
 const random = createRandom();
 
@@ -12,21 +22,18 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(100, width / height, 1, 1000);
 const renderer = new THREE.WebGLRenderer({
   alpha: false,
+  antialias: getAntialias(),
+  powerPreference: "high-performance",
 });
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.setSize(width, height);
 document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.IcosahedronGeometry();
-const material = new THREE.MeshPhongMaterial({
-  color: "white",
-  shininess: 100,
-  opacity: 0.2,
-});
+const geometry = new THREE.BoxBufferGeometry();
+const material = new THREE.MeshLambertMaterial();
+const baseShape = new THREE.Mesh(geometry, material);
 
-const grid = 12;
-const items = [];
+const grid = 15;
+const items: Item[] = [];
 for (let y = 0; y < grid; y++) {
   const py = y / (grid - 1);
   for (let x = 0; x < grid; x++) {
@@ -35,13 +42,13 @@ for (let y = 0; y < grid; y++) {
       const pz = z / (grid - 1);
       const noise = random.noise3D(py, px, pz);
 
-      const space = 50;
-      const shape = new THREE.Mesh(geometry, material);
+      const space = 45;
+      const shape = baseShape.clone();
       shape.position.x = lerp(-space, space, px);
       shape.position.y = lerp(-space, space, py);
       shape.position.z = lerp(-space, space, pz);
 
-      const scale = Math.abs(5 * noise) + 1;
+      const scale = Math.abs(5 * noise) + 2;
       shape.scale.x = scale;
       shape.scale.y = scale;
       shape.scale.z = scale;
@@ -50,9 +57,6 @@ for (let y = 0; y < grid; y++) {
       shape.rotation.x = rotation;
       shape.rotation.y = rotation;
       shape.rotation.z = rotation;
-
-      shape.receiveShadow = true;
-      shape.castShadow = true;
 
       // Render shape
       scene.add(shape);
@@ -72,33 +76,31 @@ controls.autoRotate = true;
 controls.enableDamping = true;
 controls.autoRotateSpeed = 0.3;
 controls.dampingFactor = 0.05;
+controls.minDistance = 50;
+controls.maxDistance = 300;
 controls.update();
 
-const innerLight = new THREE.PointLight(0xffffff);
-innerLight.castShadow = true;
-innerLight.position.x = 100;
-innerLight.position.y = 100;
-innerLight.distance = 200;
-scene.add(innerLight);
+camera.position.z = 120;
 
-const topLight = new THREE.PointLight(0xffffff);
+const topLight = new THREE.SpotLight(0xffffff);
 topLight.intensity = 1;
 topLight.position.y = 100;
 topLight.distance = 200;
-innerLight.castShadow = true;
 scene.add(topLight);
 
-function animate() {
-  requestAnimationFrame(animate);
+// const duration = 5; // seconds
+// const durationMs = duration * 1000;
+// const startTime = performance.now();
 
-  items.forEach(({ shape, noise }) => {
-    shape.rotation.z += 0.01 * noise;
-    shape.rotation.x = noise * 2;
-  });
+function animate(timestamp: number) {
+  requestAnimationFrame(animate);
+  // const time = timestamp - startTime;
+  // const playhead = time % durationMs;
+  // const t = playhead / durationMs;
+  // const r = Math.sin(t * Math.PI);
 
   controls.update();
-
   renderer.render(scene, camera);
 }
 
-animate();
+requestAnimationFrame(animate);
