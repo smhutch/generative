@@ -51,7 +51,8 @@ controls.update();
 const topLight = new THREE.SpotLight(0xffffff);
 topLight.intensity = 1;
 topLight.position.y = grid * 10;
-topLight.distance = grid * 10 * 2;
+topLight.position.x = grid * 5;
+topLight.distance = grid * 10 * 3;
 topLight.decay = 2;
 scene.add(topLight);
 
@@ -91,11 +92,11 @@ function animate(timestamp: number) {
         position.y = lerp(-posLimit, posLimit, py);
         position.z = lerp(-posLimit, posLimit, pz);
 
-        rotation.x = rotation.y = rotation.z = Math.PI;
+        rotation.x = lerp(0, Math.PI * px, r);
 
         quaternion.setFromEuler(rotation);
 
-        scale.x = scale.y = scale.z = 4 * noise + 3;
+        scale.x = scale.y = scale.z = 5 * px * py * pz + 2;
 
         matrix.compose(position, quaternion, scale);
         mesh.setMatrixAt(i, matrix);
