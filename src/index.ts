@@ -26,7 +26,8 @@ renderer.setSize(width, height);
 document.body.appendChild(renderer.domElement);
 
 const geometry = new THREE.IcosahedronBufferGeometry();
-const material = new THREE.MeshLambertMaterial();
+const material = new THREE.MeshPhongMaterial();
+material.shininess = 100;
 material.reflectivity = 100;
 
 const grid = 12;
@@ -76,7 +77,7 @@ function animate(timestamp: number) {
   // 0 to 1 to 0 in {{duration}} seconds
   const r = Math.sin(t * Math.PI);
 
-  var i = 0;
+  let i = 0;
   for (let x = 0; x < grid; x++) {
     const px = x / (grid - 1);
     for (let y = 0; y < grid; y++) {
