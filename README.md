@@ -1,5 +1,15 @@
-# Generative Three.js demo
+## Generative
+
+Generative experiments, with Three.js.
 
 [Demo](https://generative-three-demo.vercel.app/)
 
-<img width="739" alt="" src="https://user-images.githubusercontent.com/7217244/95680725-9625d980-0bd3-11eb-8af6-cc18b422dc2a.png">
+![](sample.gif)
+
+## Converting canvas to `.mp4`
+
+Use [`timecut`](https://github.com/tungs/timecut). Example:
+
+```sh
+timecut {{url}} --viewport=800,800 --fps=60 --duration=12 --output=video.mp4
+```

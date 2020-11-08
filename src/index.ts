@@ -3,9 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { createRandom } from "canvas-sketch-util/random";
 import { lerp } from "canvas-sketch-util/math";
 
-function getAntialias() {
-  return window.devicePixelRatio > 1 ? false : true;
-}
+import { getAntialias } from "./util";
 
 const random = createRandom();
 
