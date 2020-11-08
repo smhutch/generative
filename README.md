@@ -2,6 +2,8 @@
 
 Generative experiments, with Three.js.
 
+[Demo](https://generative-three-demo.vercel.app/)
+
 ![](sample.gif)
 
 ## Converting canvas to `.mp4`
