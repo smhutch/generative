@@ -1,21 +1,27 @@
 {
-  "name": "generative-three-demo",
+  "name": "generative",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:smhutch/generative-three-demo.git",
   "author": "Scott Hutcheson <scott@smhutch.co.uk>",
   "license": "MIT",
   "devDependencies": {
-    "parcel": "^1.12.4",
+    "@types/node": "^14.14.10",
+    "@types/react": "^17.0.0",
     "typescript": "^4.0.3"
   },
   "scripts": {
-    "build": "parcel build src/*.html",
-    "dev": "parcel src/*.html"
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start"
   },
   "dependencies": {
     "canvas-sketch-util": "^1.10.0",
     "eases": "^1.0.8",
-    "three": "^0.121.1"
+    "next": "^10.0.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "three": "^0.121.1",
+    "three-orbitcontrols": "^2.110.3"
   }
 }
