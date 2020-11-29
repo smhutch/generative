@@ -2,7 +2,7 @@
 
 Generative experiments, with Three.js.
 
-[Demo](https://generative-three-demo.vercel.app/)
+[Demo](https://generative-three-demo.vercel.app)
 
 ![](sample.gif)
 

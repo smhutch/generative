@@ -1,9 +1,9 @@
 # deps
 node_modules
 
-# parcel
-.cache
-dist
+# next
+.next
+build
 
 # mac noise
 .DS_Store
